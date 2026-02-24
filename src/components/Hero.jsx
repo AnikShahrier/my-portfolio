@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowDown, Download } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import cvofoishik from '../assets/Resume_of_Anik.pdf'
 
 const Hero = () => {
   const [text, setText] = useState('')
@@ -74,7 +75,7 @@ const Hero = () => {
           <a href="#projects" className="btn-primary">
             Check out my work
           </a>
-          <a href="#" className="btn-secondary">
+          <a href={cvofoishik} className="btn-secondary" download>
             <Download size={18} />
             Download CV
           </a>

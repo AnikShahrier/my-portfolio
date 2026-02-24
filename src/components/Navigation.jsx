@@ -1,20 +1,21 @@
 import { motion } from 'framer-motion'
-import { Home, User, FolderGit2, Wrench, Mail, Github, Linkedin, Twitter, Facebook, Instagram } from 'lucide-react'
+import { Home, User, FolderGit2, Wrench, Mail, Github, Linkedin, Facebook, Instagram, Sun, Moon } from 'lucide-react'
+import profileImage from '../assets/profilepic.jpg'
 
-const Navigation = ({ activeSection, scrollToSection }) => {
+const Navigation = ({ activeSection, scrollToSection, theme, toggleTheme }) => {
   const navItems = [
-    { id: 'hero', label: 'Home', number: '01', icon: Home },
-    { id: 'about', label: 'About', number: '02', icon: User },
-    { id: 'projects', label: 'Projects', number: '03', icon: FolderGit2 },
-    { id: 'skills', label: 'Skills', number: '04', icon: Wrench },
-    { id: 'contact', label: 'Contact', number: '05', icon: Mail },
+    { id: 'hero', label: 'Home', icon: Home },
+    { id: 'about', label: 'About', icon: User },
+    { id: 'projects', label: 'Projects', icon: FolderGit2 },
+    { id: 'skills', label: 'Skills', icon: Wrench },
+    { id: 'contact', label: 'Contact', icon: Mail },
   ]
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/AnikShahrier/ ' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/md-anik-shahrier ' },
-    { icon: Facebook, href: 'https://www.facebook.com/anikshahrieroishik ' },
-    { icon: Instagram, href: 'https://www.instagram.com/shahrier_oishik/ ' },
+    { icon: Github, href: 'https://github.com/AnikShahrier/', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/md-anik-shahrier/', label: 'LinkedIn' },
+    { icon: Facebook, href: 'https://www.facebook.com/anikshahrieroishik/', label: 'Facebook' },
+    { icon: Instagram, href: 'https://www.instagram.com/shahrier_oishik/', label: 'Instagram' },
   ]
 
   return (
@@ -22,15 +23,76 @@ const Navigation = ({ activeSection, scrollToSection }) => {
       {/* Desktop Sidebar */}
       <aside className="sidebar">
         <motion.div 
-          className="logo"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          className="profile-card"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
         >
-          Portfolio.
+          <div className="geo-circle geo-circle-1"></div>
+          <div className="geo-circle geo-circle-2"></div>
+          <div className="geo-line"></div>
+          
+          <motion.div 
+            className="profile-image-wrapper"
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="orbit-ring orbit-ring-1"></div>
+            <div className="orbit-ring orbit-ring-2"></div>
+            <div className="image-container">
+              <img src={profileImage} alt="Anik Shahrier" className="profile-img" />
+              <div className="status-dot"></div>
+            </div>
+          </motion.div>
+
+          <motion.h2 
+            className="profile-name"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            Anik Shahrier
+          </motion.h2>
+          
+          <motion.p 
+            className="profile-title"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            Software Engineer
+          </motion.p>
+
+          <motion.div 
+            className="social-links-row"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+          >
+            {socialLinks.map((social, index) => {
+              const Icon = social.icon
+              return (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  className="social-link-item"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.6 + (index * 0.1), type: "spring" }}
+                  whileHover={{ y: -4, scale: 1.15 }}
+                  whileTap={{ scale: 0.9 }}
+                  title={social.label}
+                >
+                  <Icon size={18} />
+                </motion.a>
+              )
+            })}
+          </motion.div>
         </motion.div>
-        
-        <nav className="nav-links">
+
+        <nav className="nav-container">
           {navItems.map((item, index) => {
             const Icon = item.icon
             const isActive = activeSection === item.id
@@ -39,187 +101,88 @@ const Navigation = ({ activeSection, scrollToSection }) => {
               <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`nav-item ${isActive ? 'active' : ''}`}
+                className={`nav-pill ${isActive ? 'active' : ''}`}
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: index * 0.1,
-                  ease: [0.34, 1.56, 0.64, 1]
-                }}
-                whileHover={{ 
-                  x: 8,
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ 
-                  scale: 0.95,
-                  transition: { duration: 0.1 }
-                }}
+                transition={{ delay: 0.8 + (index * 0.08), duration: 0.4 }}
+                
+                whileTap={{ scale: 0.95 }}
               >
-                <motion.span 
-                  className="nav-number"
-                  animate={{
-                    scale: isActive ? 1.1 : 1,
-                    opacity: isActive ? 1 : 0.7
-                  }}
-                  transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  {item.number}
-                </motion.span>
-                
-                <motion.div
-                  animate={{
-                    scale: isActive ? 1.15 : 1,
-                    rotate: isActive ? 0 : 0
-                  }}
-                  transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-                >
+                <div className="pill-icon">
                   <Icon size={18} />
-                </motion.div>
-                
-                <motion.span
-                  animate={{
-                    x: isActive ? 3 : 0,
-                    fontWeight: isActive ? 600 : 500
-                  }}
-                  transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  {item.label}
-                </motion.span>
-                
-                {/* Animated background pill */}
-                {isActive && (
-                  <motion.div
-                    className="active-pill"
-                    layoutId="activePill"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ 
-                      duration: 0.4, 
-                      ease: [0.34, 1.56, 0.64, 1]
-                    }}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(90deg, rgba(220, 38, 38, 0.15) 0%, rgba(220, 38, 38, 0.05) 100%)',
-                      borderRadius: '12px',
-                      zIndex: -1
-                    }}
-                  />
-                )}
-                
-                {/* Animated left border */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeBorder"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: '70%', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ 
-                      duration: 0.4, 
-                      ease: [0.34, 1.56, 0.64, 1]
-                    }}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: '3px',
-                      background: 'linear-gradient(180deg, #dc2626, #f87171)',
-                      borderRadius: '0 2px 2px 0'
-                    }}
-                  />
-                )}
+                </div>
+                <span className="pill-text">{item.label}</span>
+                {isActive && <div className="active-dot"></div>}
               </motion.button>
             )
           })}
         </nav>
-
-        <motion.div 
-          className="social-sidebar"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          {socialLinks.map((social, index) => {
-            const Icon = social.icon
-            return (
-              <motion.a
-                key={index}
-                href={social.href}
-                className="social-icon"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ 
-                  y: -5, 
-                  scale: 1.1,
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Icon size={18} />
-              </motion.a>
-            )
-          })}
-        </motion.div>
       </aside>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="bottom-nav">
-        <div className="bottom-nav-items">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isActive = activeSection === item.id
+      {/* Mobile Header */}
+      <div className="mobile-header">
+        <div className="mobile-header-content">
+          <div className="mobile-profile">
+            <img src={profileImage} alt="Anik" className="mobile-avatar" />
+            <div className="mobile-info">
+              <h3>Anik Shahrier</h3>
+              <p>Software Engineer</p>
+            </div>
+          </div>
+          
+          <div className="mobile-header-actions">
+            {/* Social links */}
+            <div className="mobile-socials">
+              {socialLinks.map((social, index) => {
+                const Icon = social.icon
+                return (
+                  <a
+                    key={index}
+                    href={social.href}
+                    className="mobile-social-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                  >
+                    <Icon size={16} />
+                  </a>
+                )
+              })}
+            </div>
             
-            return (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`bottom-nav-item ${isActive ? 'active' : ''}`}
-                whileTap={{ scale: 0.9 }}
-              >
-                <motion.div 
-                  className="bottom-nav-icon"
-                  animate={{
-                    scale: isActive ? 1.2 : 1,
-                    y: isActive ? -2 : 0
-                  }}
-                  transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-                >
-                  <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
-                </motion.div>
-                
-                <motion.span
-                  animate={{
-                    opacity: isActive ? 1 : 0.7,
-                    y: isActive ? 0 : 2
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {item.label}
-                </motion.span>
-                
-                {isActive && (
-                  <motion.div
-                    layoutId="bottomIndicator"
-                    style={{
-                      position: 'absolute',
-                      top: -2,
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: 20,
-                      height: 3,
-                      background: '#dc2626',
-                      borderRadius: 2
-                    }}
-                    transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-                  />
-                )}
-              </motion.button>
-            )
-          })}
+            {/* FIXED: Theme toggle with proper onClick */}
+            <button 
+              className="mobile-theme-btn" 
+              onClick={toggleTheme}
+              type="button"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
         </div>
+      </div>
+
+      {/* Mobile Bottom Navigation - ONLY SHOWS ON MOBILE VIA CSS */}
+      <nav className="mobile-bottom-nav">
+        {navItems.map((item) => {
+          const Icon = item.icon
+          const isActive = activeSection === item.id
+          return (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`mobile-nav-item ${isActive ? 'active' : ''}`}
+              type="button"
+            >
+              <div className="mobile-nav-icon">
+                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+              </div>
+              <span className="mobile-nav-label">{item.label}</span>
+              {isActive && <div className="mobile-nav-indicator"></div>}
+            </button>
+          )
+        })}
       </nav>
     </>
   )

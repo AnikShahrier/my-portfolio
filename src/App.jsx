@@ -26,12 +26,10 @@ function App() {
       const sections = ['hero', 'about', 'projects', 'skills', 'contact']
       const scrollPosition = window.scrollY + window.innerHeight / 3
 
-      // Show scroll to top button when near bottom
       const scrollHeight = document.documentElement.scrollHeight
       const clientHeight = window.innerHeight
       const scrollTop = window.scrollY
       
-      // Show button when scrolled past 80% of page
       if (scrollTop > (scrollHeight - clientHeight) * 0.8) {
         setShowScrollTop(true)
       } else {
@@ -71,13 +69,18 @@ function App() {
 
   return (
     <div className="app">
+      {/* FIXED: Pass toggleTheme to Navigation */}
       <Navigation 
         activeSection={activeSection} 
         scrollToSection={scrollToSection}
         theme={theme}
+        toggleTheme={toggleTheme}
       />
       
-      <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+      {/* Theme toggle - hidden on mobile, shown in sidebar on desktop */}
+      <div className="theme-toggle-wrapper">
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+      </div>
       
       <motion.div className="background-gradient" style={{ y: backgroundY }} />
       
@@ -112,7 +115,7 @@ function App() {
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <ArrowUp size={24} />
+            <ArrowUp size={22} />
           </motion.button>
         )}
       </AnimatePresence>
