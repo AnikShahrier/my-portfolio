@@ -171,7 +171,7 @@ const Contact = () => {
             © {new Date().getFullYear()} Anik Shahrier. All rights reserved.
           </p>
           <p className="footer-made-with">
-            Made with <Heart size={14} className="heart-icon" /> and lots of coffee
+            Made with <Heart size={14} className="heart-icon" /> and lots of dudh chaa
           </p>
         </div>
         
